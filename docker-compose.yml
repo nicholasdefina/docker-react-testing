@@ -1,0 +1,21 @@
+version: '3'
+services:
+  react-app:
+    build:
+      context: .  # where to source files/folders from
+      dockerfile: Dockerfile.dev  # name of file to use
+    ports:
+      - "3000:3000"
+    volumes: # volumes allow for container updating with local changes for development
+      - /app/node_modules # bookmark node_modules dir. no ":" exempts dir from any mapping
+      - .:/app # map pwd to /app
+    stdin_open: true
+  tests: # second service for hot test update action. not ideal as a lot of copy from above and cannot
+         # interact w/running test suite in terminal. other option is manually run "docker exec -it <container_id> npm run test
+    build:
+      context: .  # where to source files/folders from
+      dockerfile: Dockerfile.dev  # name of file to use
+    volumes: # volumes allow for container updating with local changes for development
+      - /app/node_modules # bookmark node_modules dir. no ":" exempts dir from any mapping
+      - .:/app # map pwd to /app
+    command: ["npm", "run", "test"]
