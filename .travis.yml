@@ -8,3 +8,10 @@ before_install:
 
 script:
   - docker run -e CI=true nicholasjdefina/docker-react-testing npm run test
+
+#deploy:
+#  provider: elasticbeanstalk  # travisCI has elasticbeanstalk on pre configured list
+#  region: "us-east-2"
+#  app: # get this in quotes whenever aws unblocks account
+#  env: # get this in quotes whenever aws unblocks account
+#  bucket_name:
