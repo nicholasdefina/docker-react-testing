@@ -9,9 +9,18 @@ before_install:
 script:
   - docker run -e CI=true nicholasjdefina/docker-react-testing npm run test
 
-#deploy:
-#  provider: elasticbeanstalk  # travisCI has elasticbeanstalk on pre configured list
-#  region: "us-east-2"
-#  app: # get this in quotes whenever aws unblocks account
-#  env: # get this in quotes whenever aws unblocks account
-#  bucket_name:
+deploy:
+  # travisCI has elasticbeanstalk on pre configured list
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "docker-react-testing"
+  env: "DockerReactTesting-env"
+  # s3 bucket, like a hard drive for ebs instance
+  bucket_name: elasticbeanstalk-us-east-1-300143141245
+  # initially use app name
+  bucket_path: "docker-react-testing"
+  on:
+    # deploy this any time updates made to master branch
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
